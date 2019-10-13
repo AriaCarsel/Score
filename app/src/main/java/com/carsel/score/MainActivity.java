@@ -2,6 +2,7 @@ package com.carsel.score;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,30 @@ public class MainActivity extends AppCompatActivity  {
 
         TeamA = findViewById(R.id.textView2);
         TeamB = findViewById(R.id.textView4);
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //获取当前两个队的积分
+        String scoreA = ((TextView)findViewById(R.id.textView2)).getText().toString();
+        String scoreB = ((TextView)findViewById(R.id.textView4)).getText().toString();
+
+        Log.i("TAG","onSaveInstanceState:");
+        outState.putString("teamA_score",scoreA);
+        outState.putString("teamB_score",scoreB);
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        //取出数据
+        String scoreA = savedInstanceState.getString("teamA_score");
+        String scoreB = savedInstanceState.getString("teamB_score");
+
+        Log.i("TAG","onRestoreInstanceState");
+        //更新
+        ((TextView)findViewById(R.id.textView2)).setText(scoreA);
+        ((TextView)findViewById(R.id.textView4)).setText(scoreB);
+
     }
 //    TeamA Score
     public void A_3(View view){
